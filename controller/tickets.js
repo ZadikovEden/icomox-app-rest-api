@@ -31,7 +31,7 @@ const getAllTickets = async (req, res, next) => {
        res.json(filterTickets(response.data));
       })
       .catch(function (error) {
-        console.log(error);
+        next(error);
       });
 }
 
@@ -44,11 +44,11 @@ const getOpenTickets = async (req, res, next) => {
       }
     };    
     axios(config)
-    .then(function (response) {
-      res.json(filterTickets(response.data));
+    .then(response=> {
+      res.status(200).json(filterTickets(response.data));
     })
-    .catch(function (error) {
-      console.log(error);
+    .catch(error => {
+      next(error)
     });
 }
 
